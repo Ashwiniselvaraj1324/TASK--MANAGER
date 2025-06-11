@@ -1,0 +1,318 @@
+{
+  "name": "n8n - testing",
+  "nodes": [
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "30925406-dc3c-4e04-9506-834b3c69840c",
+              "leftValue": "={{ $json.Urgency }}",
+              "rightValue": "High",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -60,
+        -20
+      ],
+      "id": "a4f31acd-dd84-49c5-9529-07da38841f42",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "sendTo": "ashwini.s.dt@snsgroups.com",
+        "subject": "Task - update",
+        "emailType": "text",
+        "message": "={{ $json['Assigned To'] }}As per the level finish the task by EOD {{ $json['Task Title'] }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        460,
+        -98.56822159894558
+      ],
+      "id": "aea52eb9-8aa8-44e5-9cc9-e5b58f3da92d",
+      "name": "Gmail",
+      "webhookId": "aa3861ab-d891-4d98-831c-e882ff87351e",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "tKLjIHC3szouwqDS",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        },
+        "documentId": {
+          "__rl": true,
+          "value": "1fvelxJDGLjwxXTYK6dFlh7kxKuI8ZKXWagy8EaCE95U",
+          "mode": "list",
+          "cachedResultName": "Data",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1fvelxJDGLjwxXTYK6dFlh7kxKuI8ZKXWagy8EaCE95U/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1fvelxJDGLjwxXTYK6dFlh7kxKuI8ZKXWagy8EaCE95U/edit#gid=0"
+        },
+        "event": "rowAdded",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheetsTrigger",
+      "typeVersion": 1,
+      "position": [
+        -340,
+        -20
+      ],
+      "id": "fbe2eb97-e519-41ab-922b-9c11a657306b",
+      "name": "Google Sheets Trigger",
+      "credentials": {
+        "googleSheetsTriggerOAuth2Api": {
+          "id": "4Y7Me5Hly6xvE4xp",
+          "name": "Google Sheets Trigger account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $json['Mail id'] }}",
+        "subject": "report on task update",
+        "emailType": "text",
+        "message": "Check the feedback and report  to complete the task on time",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        460,
+        100
+      ],
+      "id": "828bf633-7186-46a6-8703-07f6c92c8a78",
+      "name": "Gmail1",
+      "webhookId": "cb74cfc0-0bd5-4095-a42a-df11f4e879f9",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "tKLjIHC3szouwqDS",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1fvelxJDGLjwxXTYK6dFlh7kxKuI8ZKXWagy8EaCE95U",
+          "mode": "list",
+          "cachedResultName": "Data",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1fvelxJDGLjwxXTYK6dFlh7kxKuI8ZKXWagy8EaCE95U/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1fvelxJDGLjwxXTYK6dFlh7kxKuI8ZKXWagy8EaCE95U/edit#gid=0"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.6,
+      "position": [
+        100,
+        80
+      ],
+      "id": "b80327be-e27a-4c65-89c3-66dd919e69fd",
+      "name": "Google Sheets",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "c7E7rPedtOie7cU6",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "Assigns task as per the caliber of an individual that might be provided with the task thats completed from the previous days and the upcoming task .",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2,
+      "position": [
+        680,
+        -100
+      ],
+      "id": "16d3514f-8693-48bf-b4fa-b5985c4c7ed6",
+      "name": "AI Agent1"
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-1.5-flash",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        720,
+        120
+      ],
+      "id": "67cde482-e5b0-489b-be3c-d914e3974ad2",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "ZOgZPDwthvSHi662",
+          "name": "Google Gemini(PaLM) Api account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $('Google Sheets Trigger').item.json['Mail id'] }}",
+        "subject": "task - update ",
+        "emailType": "text",
+        "message": "={{ $json.output }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        1040,
+        -100
+      ],
+      "id": "22e08e3b-4b30-4791-abc8-65e639be5aaf",
+      "name": "Gmail2",
+      "webhookId": "c9f3981e-0398-47f2-8393-1e0887e4b231",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "tKLjIHC3szouwqDS",
+          "name": "Gmail account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Gmail",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Google Sheets",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets Trigger": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets": {
+      "main": [
+        [
+          {
+            "node": "Gmail1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gmail": {
+      "main": [
+        [
+          {
+            "node": "AI Agent1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent1",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent1": {
+      "main": [
+        [
+          {
+            "node": "Gmail2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gmail1": {
+      "main": [
+        [
+          {
+            "node": "AI Agent1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "4fcb2eaf-c5f1-4a74-bdd6-0ef241b46b22",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "eb16799efd3d8b80a767befdfcef352cd7c0dfa04e4bdf32115210d9e4f43684"
+  },
+  "id": "FWv34NXNjvzuVg0z",
+  "tags": []
+}
