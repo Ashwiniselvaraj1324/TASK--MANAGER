@@ -1,0 +1,20 @@
+Core app & LLM integrations
+
+streamlit>=1.35.0
+langchain-google-genai>=0.0.9
+langchain-community>=0.2.0
+duckduckgo-search>=6.1.3
+google-generativeai>=0.3.2
+
+Google APIs & auth for Sheets / Gmail
+
+google-auth>=2.29.0
+google-auth-oauthlib>=1.2.0
+google-auth-httplib2>=0.1.0
+google-api-python-client>=2.130.0
+gspread>=6.2.0  # Optional helper for Google Sheets
+
+Utility
+
+python-dotenv>=1.0.1
+
